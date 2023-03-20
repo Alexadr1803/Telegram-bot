@@ -10,7 +10,8 @@ def get_path():
     return str(source_path)
 
 
-bot = telebot.TeleBot('6144683206:AAGEiDwpUkZRg25pnMym5YbkvlnycuT-k-I')
+token_path = Path(".tgtoken")
+bot = telebot.TeleBot(token_path.read_text().rstrip("\n\r"))
 
 
 @bot.message_handler()
