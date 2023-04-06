@@ -3,6 +3,7 @@ from registration import register, create_user
 from telebot import types
 
 
+# Функция сортирующая запросы пользователей по их статусам
 def users_sort(bot, msg):
     con = sqlite3.connect("DataBase.db")
     cur = con.cursor()
