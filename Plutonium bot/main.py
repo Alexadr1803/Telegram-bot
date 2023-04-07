@@ -1,7 +1,7 @@
 import telebot
 from bot_key import key
 from callback_operation import callback_op
-from users_sort import users_sort
+from users_sort import users_sorting
 
 bot = telebot.TeleBot(key)
 
@@ -9,7 +9,7 @@ bot = telebot.TeleBot(key)
 # Сортировка пользователей по их действиям
 @bot.message_handler(content_types=['text'])
 def sorting_users(msg):
-    users_sort(bot, msg)
+    users_sorting(bot, msg)
 
 
 # Если пользователь отправил стикер пишем ему ответочку
