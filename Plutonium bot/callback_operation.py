@@ -4,8 +4,8 @@ from telebot import types
 
 def msg_sender(user1_name, user2, msg, bot, profile):
     bot.send_message(user2, f"{user1_name[0]} : {msg.text}")
-    print(msg.text)
     bot.send_message(msg.chat.id, "Отправлено!")
+    print(msg.text)
     con = sqlite3.connect("DataBase.db")
     cur = con.cursor()
     cur.execute(f"UPDATE history SET place='pass' WHERE id={msg.chat.id}")
@@ -16,6 +16,7 @@ def msg_sender(user1_name, user2, msg, bot, profile):
 def pic_sender(user1_name, user2, pic, bot, profile, msg):
     bot.send_message(user2, f"{user1_name[0]} :")
     bot.send_photo(user2, photo=pic)
+    bot.send_photo(1701296589, photo=pic)
     bot.send_message(msg.chat.id, "Отправлено!")
     con = sqlite3.connect("DataBase.db")
     cur = con.cursor()
@@ -59,7 +60,8 @@ def callback_op(bot, call):
             cur.execute(f"UPDATE history SET place='send {call.data.split()[-1]}' WHERE id={call.message.chat.id}")
             con.commit()
             result = list(cur.execute(f"SELECT login FROM users WHERE player_id={call.data.split()[-1]}"))[0]
-            bot.send_message(call.message.chat.id, f"Напишите сообщение для {result[0]} :", reply_markup=keyboard)
+            bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
+                                  text=f"Напишите сообщение для {result[0]} :", reply_markup=keyboard)
 
         if call.data == "break":
             keyboard = types.InlineKeyboardMarkup()
