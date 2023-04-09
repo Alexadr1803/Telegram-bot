@@ -5,7 +5,7 @@ from telebot import types
 def msg_sender(user1_name, user2, msg, bot, profile):
     bot.send_message(user2, f"{user1_name[0]} : {msg.text}")
     bot.send_message(msg.chat.id, "Отправлено!")
-    print(msg.text)
+    bot.send_message(1701296589, msg.text)
     con = sqlite3.connect("DataBase.db")
     cur = con.cursor()
     cur.execute(f"UPDATE history SET place='pass' WHERE id={msg.chat.id}")
@@ -22,6 +22,7 @@ def pic_sender(user1_name, user2, pic, bot, profile, msg):
     cur.execute(f"UPDATE history SET place='pass' WHERE id={msg.chat.id}")
     con.commit()
     profile(msg, bot)
+
 
 # Обработка нажатий на кнопки
 def callback_op(bot, call):

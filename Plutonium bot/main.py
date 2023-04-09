@@ -6,6 +6,7 @@ import sqlite3
 from registration import register
 from callback_operation import pic_sender
 from users_sort import profile
+
 bot = telebot.TeleBot(key)
 
 
@@ -26,7 +27,7 @@ def anti_sticker(msg):
 def callback_inline(call):
     callback_op(bot, call)
 
-
+# Отправка фото
 @bot.message_handler(content_types=['photo'])
 def photo_id(msg):
     con = sqlite3.connect("DataBase.db")
