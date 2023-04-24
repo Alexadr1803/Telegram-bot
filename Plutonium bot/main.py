@@ -1,13 +1,39 @@
 import telebot
+import logging
 from bot_key import key
 from callback_operation import callback_op
-from users_sort import users_sorting
-import sqlite3
-from registration import register
 from callback_operation import pic_sender
-from users_sort import profile
+from users_sort import *
+
 
 bot = telebot.TeleBot(key)
+
+# Запускаем логгирование
+logging.basicConfig(
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.DEBUG
+)
+
+logger = logging.getLogger(__name__)
+
+
+@bot.message_handler(commands=['start'])
+def start(msg):
+    bot.send_message(msg.chat.id, "Привет я Plutonium Network бот я могу работать с сервером")
+
+
+@bot.message_handler(commands=['help'])
+def help_message(msg):
+    bot.send_message(msg.chat.id, "/start - начало;\n/help-список комманд")
+
+
+@bot.message_handler(commands=['create_news'])
+def news(msg):
+    con = sqlite3.connect("DataBase.db")
+    cur = con.cursor()
+    cur_result = cur.execute("""SELECT player_id, status FROM users""")
+    con.commit()
+    for i in list(cur_result):
+        bot.send_message(int(i[0]), " ".join(msg.text.split()[1:]))
 
 
 # Сортировка пользователей по их действиям
@@ -27,6 +53,7 @@ def anti_sticker(msg):
 def callback_inline(call):
     callback_op(bot, call)
 
+
 # Отправка фото
 @bot.message_handler(content_types=['photo'])
 def photo_id(msg):
@@ -45,4 +72,4 @@ def photo_id(msg):
 
 
 # Зацикливание бота
-bot.polling(none_stop=True, interval=1)
+bot.infinity_polling()
